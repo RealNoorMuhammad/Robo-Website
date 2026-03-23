@@ -120,7 +120,7 @@ function App() {
   return (
     <div ref={appRef} className="app">
       <HeroSection />
-      <DeathNoteDivider />
+    
       <div className="app__below-divider">
         <LatestTweetsSection />
         <DeathNotePanel />
