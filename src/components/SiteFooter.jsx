@@ -35,7 +35,7 @@ export default function SiteFooter() {
           <span className="site-footer__disclaimer-body">
             <strong>Disclaimer:</strong> Nothing posted here is financial advice. Memecoins and prediction
             markets trading is risky. Always DYOR. Everything here is one person sharing their journey and
-            thoughts — not a signal service and not investment guidance.
+            thoughts.
           </span>
         </p>
       </div>

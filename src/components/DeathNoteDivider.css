@@ -165,14 +165,21 @@
 .dn-divider__tagline {
   margin: 0;
   font-family: var(--font-caps);
-  font-size: clamp(0.5rem, 1.5vw, 0.62rem);
-  letter-spacing: 0.22em;
+  font-size: clamp(0.42rem, 1.15vw, 0.54rem);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(198, 168, 94, 0.82);
   text-shadow: 0 0 20px rgba(179, 18, 23, 0.25);
   animation: dn-div-tagline 5s ease-in-out infinite;
-  max-width: 9rem;
+  max-width: 8rem;
   line-height: 1.35;
+}
+
+@media (min-width: 900px) {
+  .dn-divider__tagline {
+    font-size: 0.46rem;
+    letter-spacing: 0.16em;
+  }
 }
 
 .dn-divider__rule {

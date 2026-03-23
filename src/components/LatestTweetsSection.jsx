@@ -1,12 +1,24 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion as Motion, useReducedMotion } from 'framer-motion'
 import gsap from 'gsap'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { ROBO_TWEET_IDS } from '../data/roboTweetIds.js'
 import TweetEmbed from './TweetEmbed.jsx'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import './LatestTweetsSection.css'
 
-const INITIAL_COUNT = 6
-const LOAD_MORE = 3
+const ROBO_HANDLE = 'roboPBOC'
+const ROBO_SOURCES = [
+  'https://r.jina.ai/http://x.com/roboPBOC',
+  'https://r.jina.ai/http://twitter.com/roboPBOC',
+  'https://r.jina.ai/http://x.com/roboPBOC/media',
+  'https://r.jina.ai/http://x.com/roboPBOC/with_replies',
+  'https://r.jina.ai/http://x.com/roboPBOC/highlights',
+]
+const ROBO_STATUS_RE = new RegExp(`${ROBO_HANDLE}/status/(\\d+)`, 'g')
 
 function parseEnvIds() {
   const raw = import.meta.env.VITE_TWEET_IDS?.trim()
@@ -15,30 +27,65 @@ function parseEnvIds() {
   return parts.length ? parts : null
 }
 
+function sortTweetIds(ids) {
+  return [...new Set(ids.map(String))].sort((a, b) => {
+    try {
+      if (BigInt(a) < BigInt(b)) return 1
+      if (BigInt(a) > BigInt(b)) return -1
+      return 0
+    } catch {
+      return 0
+    }
+  })
+}
+
+async function fetchLatestRoboTweetIds(signal) {
+  const found = []
+  const seen = new Set()
+
+  for (const url of ROBO_SOURCES) {
+    const response = await fetch(url, { signal })
+    if (!response.ok) continue
+    const text = await response.text()
+
+    for (const match of text.matchAll(ROBO_STATUS_RE)) {
+      const id = match[1]
+      if (!id || seen.has(id)) continue
+      seen.add(id)
+      found.push(id)
+    }
+  }
+
+  return sortTweetIds(found)
+}
+
 export default function LatestTweetsSection() {
   const reduceMotion = useReducedMotion()
   const headRef = useRef(null)
-  const btnRef = useRef(null)
+  const envTweetIds = useMemo(() => parseEnvIds(), [])
 
-  const tweetIds = useMemo(() => {
-    const fromEnv = parseEnvIds()
-    const raw = fromEnv ?? ROBO_TWEET_IDS
-    const unique = [...new Set(raw.map(String))]
-    return unique.sort((a, b) => {
-      try {
-        if (BigInt(a) < BigInt(b)) return 1
-        if (BigInt(a) > BigInt(b)) return -1
-        return 0
-      } catch {
-        return 0
-      }
-    })
-  }, [])
+  const [tweetIds, setTweetIds] = useState(() => sortTweetIds(envTweetIds ?? ROBO_TWEET_IDS))
 
-  const [visibleCount, setVisibleCount] = useState(() => Math.min(INITIAL_COUNT, tweetIds.length))
+  useEffect(() => {
+    if (envTweetIds?.length) return undefined
 
-  const visibleIds = useMemo(() => tweetIds.slice(0, visibleCount), [tweetIds, visibleCount])
-  const canShowMore = visibleCount < tweetIds.length
+    let mounted = true
+    const controller = new AbortController()
+
+    fetchLatestRoboTweetIds(controller.signal)
+      .then((ids) => {
+        if (!mounted || !ids.length) return
+        setTweetIds(ids)
+      })
+      .catch(() => {
+        // Keep current fallback IDs when external fetch is unavailable.
+      })
+
+    return () => {
+      mounted = false
+      controller.abort()
+    }
+  }, [envTweetIds])
 
   useEffect(() => {
     if (reduceMotion || !headRef.current) return
@@ -60,97 +107,82 @@ export default function LatestTweetsSection() {
     return () => ctx.revert()
   }, [reduceMotion])
 
-  useEffect(() => {
-    if (reduceMotion || !btnRef.current) return
-    const btn = btnRef.current
-    const onEnter = () => {
-      gsap.to(btn, {
-        boxShadow: '0 0 28px rgba(179, 18, 23, 0.45), inset 0 1px 0 rgba(255,255,255,0.08)',
-        duration: 0.35,
-        ease: 'power2.out',
-      })
-    }
-    const onLeave = () => {
-      gsap.to(btn, {
-        boxShadow: '0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)',
-        duration: 0.45,
-        ease: 'power2.out',
-      })
-    }
-    btn.addEventListener('mouseenter', onEnter)
-    btn.addEventListener('mouseleave', onLeave)
-    return () => {
-      btn.removeEventListener('mouseenter', onEnter)
-      btn.removeEventListener('mouseleave', onLeave)
-    }
-  }, [reduceMotion])
-
-  const onShowMore = useCallback(() => {
-    setVisibleCount((n) => Math.min(n + LOAD_MORE, tweetIds.length))
-  }, [tweetIds.length])
-
   return (
     <section id="notebook-feed" className="dn-tweets section" aria-label="X posts">
       <div ref={headRef} className="dn-tweets__head dn-tweets__head--minimal">
-        <p className="dn-tweets__kicker">Death Note · Field transmission</p>
-        <div className="dn-tweets__rule-lines" aria-hidden="true">
-          <span className="dn-tweets__anim-line" />
-          <span className="dn-tweets__anim-line dn-tweets__anim-line--short" />
+        <p className="dn-tweets__kicker">Latest Tweets from Robo</p>
+        <div className="dn-tweets__nav-group" aria-label="Tweets navigation">
+          <button className="dn-tweets__nav dn-tweets__nav--prev" type="button" aria-label="Previous tweets">
+            &#8249;
+          </button>
+          <button className="dn-tweets__nav dn-tweets__nav--next" type="button" aria-label="Next tweets">
+            &#8250;
+          </button>
         </div>
       </div>
 
-      <div className="dn-tweets__grid">
-        {visibleIds.map((id, i) => (
-          <Motion.div
-            key={id}
-            className="dn-tweets__cell"
-            initial={reduceMotion ? false : { opacity: 0, y: 28, rotateX: -6 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{
-              type: 'spring',
-              stiffness: 120,
-              damping: 22,
-              delay: reduceMotion ? 0 : Math.min(i * 0.06, 0.42),
-            }}
-          >
-            <div className="dn-tweets__card">
-              <div className="dn-tweets__card-ornament" aria-hidden="true">
-                <span className="dn-tweets__seal" />
-                <span className="dn-tweets__scratch" />
-              </div>
-              <div className="dn-tweets__card-lines" aria-hidden="true" />
-              <div className="dn-tweets__embed-wrap">
-                <TweetEmbed tweetId={id} />
-              </div>
-              <div className="dn-tweets__card-glow" aria-hidden="true" />
-            </div>
-          </Motion.div>
-        ))}
-      </div>
-
-      {canShowMore && (
-        <Motion.div
-          className="dn-tweets__actions"
-          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+      <div className="dn-tweets__slider-wrap">
+        <Swiper
+          modules={[Pagination, Navigation, ...(reduceMotion ? [] : [Autoplay])]}
+          className="dn-tweets__slider"
+          spaceBetween={18}
+          slidesPerView={1}
+          loop={tweetIds.length > 3}
+          allowTouchMove={true}
+          simulateTouch={true}
+          grabCursor={true}
+          touchRatio={1.1}
+          touchStartPreventDefault={false}
+          touchMoveStopPropagation={false}
+          touchEventsTarget="container"
+          navigation={{
+            prevEl: '.dn-tweets__nav--prev',
+            nextEl: '.dn-tweets__nav--next',
+          }}
+          autoplay={
+            reduceMotion
+              ? false
+              : {
+                  delay: 3200,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }
+          }
+          pagination={{ clickable: true }}
+          breakpoints={{
+            680: { slidesPerView: 2 },
+            1100: { slidesPerView: 3 },
+          }}
         >
-          <button
-            ref={btnRef}
-            type="button"
-            className="dn-tweets__more"
-            onClick={onShowMore}
-          >
-            <span className="dn-tweets__more-inner">
-              <span className="dn-tweets__more-text">View more</span>
-              <span className="dn-tweets__more-glyph" aria-hidden="true">
-                ✎
-              </span>
-            </span>
-          </button>
-        </Motion.div>
-      )}
+          {tweetIds.map((id, i) => (
+            <SwiperSlide key={id} className="dn-tweets__slide">
+              <Motion.div
+                className="dn-tweets__cell"
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.5,
+                  ease: 'easeOut',
+                  delay: reduceMotion ? 0 : Math.min(i * 0.04, 0.18),
+                }}
+              >
+                <div className="dn-tweets__card">
+                  <div className="dn-tweets__card-ornament" aria-hidden="true">
+                    <span className="dn-tweets__seal" />
+                    <span className="dn-tweets__scratch" />
+                  </div>
+                  <div className="dn-tweets__card-lines" aria-hidden="true" />
+                  <div className="dn-tweets__embed-wrap">
+                    <TweetEmbed tweetId={id} />
+                  </div>
+                  <div className="dn-tweets__card-glow" aria-hidden="true" />
+                </div>
+              </Motion.div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </section>
   )
 }

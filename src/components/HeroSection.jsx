@@ -1,6 +1,4 @@
-import heroDesktop from '../assets/desktop.jpeg'
-import heroMobile from '../assets/mobile.png'
-import robos from '../assets/robo1.jpeg'
+import robos from '../assets/robo.png'
 import HeroDeathNoteTitle from './HeroDeathNoteTitle.jsx'
 import HeroElectric from './HeroElectric.jsx'
 import './HeroSection.css'
@@ -16,19 +14,6 @@ const SPARKS = Array.from({ length: 16 }, (_, i) => ({
 export default function HeroSection() {
   return (
     <section className="hero" aria-label="Hero">
-      <picture>
-        <source media="(max-width: 899px)" srcSet={heroMobile} type="image/png" />
-        <img
-          className="hero__desk"
-          src={heroDesktop}
-          alt=""
-          width={1920}
-          height={1080}
-          loading="eager"
-          decoding="async"
-        />
-      </picture>
-
       <div className="hero__canvas" aria-hidden="true">
         <div className="hero__glow hero__glow--a" />
         <div className="hero__glow hero__glow--b" />
@@ -55,33 +40,13 @@ export default function HeroSection() {
       <div className="hero__vignette" aria-hidden="true" />
 
       <div className="hero__grid">
-        <div className="hero__media">
-          <div className="hero__media-frame">
-            <img
-              className="hero__robos"
-              src={robos}
-              alt="Robo"
-              width={640}
-              height={800}
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-        </div>
-
         <div className="hero__copy">
           <p className="hero__kicker">The God of New World</p>
           <HeroDeathNoteTitle />
-          <p className="hero__owner">
-            <span className="hero__owner-label">Owner</span>{' '}
-            <a
-              href="https://x.com/roboPBOC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero__owner-link"
-            >
-              @roboPBOC
-            </a>
+          <p className="hero__summary">
+            memecoins & prediction markets | I put faith in my own convictions as to what
+            <span className="hero__summary-break-desktop" aria-hidden="true" />
+            {' '}I believe is right and consider them to be righteous.
           </p>
           <div className="hero__actions">
             <a
@@ -122,6 +87,20 @@ export default function HeroSection() {
                 <span className="hero__dn-link-label">Join Telegram</span>
               </span>
             </a>
+          </div>
+        </div>
+
+        <div className="hero__media">
+          <div className="hero__media-frame">
+            <img
+              className="hero__robos"
+              src={robos}
+              alt="Robo"
+              width={640}
+              height={800}
+              loading="eager"
+              decoding="async"
+            />
           </div>
         </div>
       </div>

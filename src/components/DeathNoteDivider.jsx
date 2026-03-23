@@ -36,7 +36,7 @@ export default function DeathNoteDivider() {
         </div>
       </div>
 
-      <p className="dn-divider__rule">The name written here will not be forgotten.</p>
+
     </div>
   )
 }
