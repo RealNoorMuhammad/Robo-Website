@@ -103,7 +103,7 @@
 
 .app__below-divider .site-footer {
   border-top-color: rgba(68, 66, 70, 0.45);
-  background: transparent;
+  background: #322b2a;
 }
 
 .app__below-divider .site-footer__owner {
@@ -388,24 +388,17 @@
   z-index: 1;
   overflow: hidden;
   padding: 0;
-  border-top: 1px solid rgba(66, 26, 32, 0.7);
-  background:
-    radial-gradient(ellipse 120% 70% at 50% -10%, rgba(125, 5, 12, 0.2) 0%, transparent 60%),
-    linear-gradient(180deg, #040406 0%, #09060a 55%, #030304 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
-    0 -24px 64px rgba(0, 0, 0, 0.5);
+  border-top: 0;
+  background: #322b2a;
+  box-shadow: none;
 }
 
 .site-footer__ambient {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 74% 46% at 50% 15%, rgba(125, 5, 12, 0.2) 0%, transparent 72%),
-    radial-gradient(ellipse 62% 35% at 22% 100%, rgba(60, 10, 14, 0.26) 0%, transparent 66%);
-  animation: site-footer-ambient 9s ease-in-out infinite;
+  background: transparent;
+  animation: none;
 }
 
 @keyframes site-footer-ambient {
@@ -422,16 +415,10 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.22;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 22px,
-    rgba(139, 18, 23, 0.06) 22px,
-    rgba(139, 18, 23, 0.06) 23px
-  );
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  animation: site-footer-notebook 28s linear infinite;
+  opacity: 0;
+  background-image: none;
+  mask-image: none;
+  animation: none;
 }
 
 @keyframes site-footer-notebook {
@@ -450,15 +437,8 @@
   top: 0;
   height: 2px;
   pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(198, 168, 94, 0.28) 20%,
-    rgba(125, 5, 12, 0.72) 50%,
-    rgba(198, 168, 94, 0.28) 80%,
-    transparent
-  );
-  animation: site-footer-rim 5s ease-in-out infinite;
+  background: transparent;
+  animation: none;
 }
 
 @keyframes site-footer-rim {
@@ -482,15 +462,10 @@
   padding: clamp(1.35rem, 2.8vw, 2rem);
   display: grid;
   gap: 2rem;
-  border: 1px solid rgba(66, 26, 32, 0.75);
+  border: 0;
   border-radius: 0;
-  background: linear-gradient(180deg, #141215 0%, #110e11 26%, #0b090c 66%, #060608 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.03),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.55),
-    0 20px 52px rgba(0, 0, 0, 0.58),
-    0 0 34px rgba(125, 5, 12, 0.16),
-    0 0 0 1px rgba(18, 18, 20, 0.75);
+  background: #322b2a;
+  box-shadow: none;
 }
 
 .site-footer__grid::before {
@@ -499,7 +474,7 @@
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  background: linear-gradient(180deg, rgba(125, 5, 12, 0.14) 0%, transparent 26%);
+  background: transparent;
 }
 
 .site-footer__grid::after {
@@ -508,7 +483,7 @@
   inset: -1px;
   pointer-events: none;
   border-radius: inherit;
-  border: 1px solid rgba(198, 168, 94, 0.08);
+  border: 0;
 }
 
 .site-footer__col--brand {

@@ -17,13 +17,15 @@ const container = {
 const letter = {
   hidden: {
     opacity: 0,
-    y: 32,
-    rotate: -7,
-    scale: 0.88,
+    x: -90,
+    y: 0,
+    rotate: 0,
+    scale: 0.58,
     filter: 'blur(12px)',
   },
   visible: {
     opacity: 1,
+    x: 0,
     y: 0,
     rotate: 0,
     scale: 1,

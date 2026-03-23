@@ -218,6 +218,8 @@
 
 .mind-panel__word--hesitation {
   margin-left: 10px;
+  font-size: clamp(1.65rem, 5.15vw, 2.7rem);
+  letter-spacing: 0.01em;
 }
 
 .mind-panel__detail {
@@ -312,6 +314,10 @@
 
   .mind-panel__word--xl {
     font-size: clamp(1.35rem, 6.8vw, 1.95rem);
+  }
+
+  .mind-panel__word--hesitation {
+    font-size: clamp(1.2rem, 5.8vw, 1.7rem);
   }
 
   .mind-panel__detail {

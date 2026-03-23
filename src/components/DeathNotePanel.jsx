@@ -103,7 +103,6 @@ export default function DeathNotePanel() {
               {active.id}
             </p>
             <p className="mind-panel__detail">{active.detail}</p>
-            <p className="mind-panel__quote">Exactly as planned.</p>
           </div>
         </div>
       </div>

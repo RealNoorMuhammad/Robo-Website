@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 import robos from '../assets/robo.png'
 import HeroDeathNoteTitle from './HeroDeathNoteTitle.jsx'
 import HeroElectric from './HeroElectric.jsx'
@@ -11,10 +13,73 @@ const SPARKS = Array.from({ length: 16 }, (_, i) => ({
   scale: 0.4 + (i % 3) * 0.25,
 }))
 
+const SMOKE_PLUMES = Array.from({ length: 12 }, (_, i) => ({
+  id: i,
+  left: `${-16 + i * 11}%`,
+  delay: `${(i * 0.75) % 8}s`,
+  dur: `${16 + (i % 5) * 2.6}s`,
+  size: `${30 + (i % 6) * 7}vw`,
+}))
+
 export default function HeroSection() {
+  const arrowRef = useRef(null)
+  const arrowCoreRef = useRef(null)
+
+  useEffect(() => {
+    if (!arrowRef.current || !arrowCoreRef.current) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const ctx = gsap.context(() => {
+      gsap.to(arrowRef.current, {
+        y: 10,
+        duration: 1.35,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+      })
+
+      gsap.to(arrowCoreRef.current, {
+        boxShadow: '0 0 28px rgba(179, 18, 23, 0.68), 0 0 52px rgba(90, 8, 12, 0.44)',
+        duration: 1.6,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+      })
+    })
+
+    return () => {
+      ctx.revert()
+    }
+  }, [])
+
+  const handleArrowClick = () => {
+    const nextSection = document.querySelector('.app__below-divider')
+    if (!nextSection) return
+    nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <section className="hero" aria-label="Hero">
       <div className="hero__canvas" aria-hidden="true">
+        <div className="hero__void" />
+        <div className="hero__smoke-bed" />
+        <div className="hero__smoke-shroud" />
+        <div className="hero__smoke-veil hero__smoke-veil--a" />
+        <div className="hero__smoke-veil hero__smoke-veil--b" />
+        <div className="hero__smoke-veil hero__smoke-veil--c" />
+        {SMOKE_PLUMES.map((plume) => (
+          <span
+            key={plume.id}
+            className="hero__smoke-plume"
+            style={{
+              left: plume.left,
+              width: plume.size,
+              height: plume.size,
+              animationDelay: plume.delay,
+              animationDuration: plume.dur,
+            }}
+          />
+        ))}
         <div className="hero__glow hero__glow--a" />
         <div className="hero__glow hero__glow--b" />
         <div className="hero__glow hero__glow--c" />
@@ -104,6 +169,20 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
+      <button
+        ref={arrowRef}
+        type="button"
+        className="hero__scroll-arrow"
+        onClick={handleArrowClick}
+        aria-label="Scroll down"
+      >
+        <span className="hero__scroll-arrow-core" ref={arrowCoreRef} aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 17.2L5.3 10.5l1.4-1.4 5.3 5.3 5.3-5.3 1.4 1.4L12 17.2z" fill="currentColor" />
+          </svg>
+        </span>
+      </button>
     </section>
   )
 }
