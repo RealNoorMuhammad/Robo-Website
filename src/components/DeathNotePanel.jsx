@@ -62,8 +62,18 @@ export default function DeathNotePanel() {
   }, [paused])
 
   return (
-    <section className="section mind-panel" aria-label="Mind panel">
-      <p className="mind-panel__heading">I will Clear</p>
+    <section className="section mind-panel" aria-labelledby="robo-universe-heading">
+      <header
+        className="mind-panel__section-head dn-tweets__head dn-tweets__head--minimal"
+        aria-labelledby="robo-universe-heading"
+      >
+        <div className="dn-tweets__head-copy">
+          <h2 id="robo-universe-heading" className="dn-tweets__title">
+            The Robo Universe
+          </h2>
+          <p className="dn-tweets__subtitle">I will Clear</p>
+        </div>
+      </header>
       <div className="mind-panel__shell">
         <div className="mind-panel__rail" aria-label="States">
           <svg className="mind-panel__arc" viewBox="0 0 120 520" aria-hidden="true">

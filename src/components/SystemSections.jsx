@@ -217,7 +217,7 @@ export default function SystemSections() {
             disabled={!hasMore}
             aria-label={hasMore ? 'Load three more posts' : 'No more posts to load'}
           >
-            View more
+            View More
           </button>
         </div>
       )}

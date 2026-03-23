@@ -1,23 +1,18 @@
 .mind-panel {
   position: relative;
-  padding-top: clamp(2.5rem, 7vw, 4.5rem);
   padding-bottom: clamp(2.5rem, 7vw, 4.5rem);
 }
 
-.mind-panel__heading {
-  position: absolute;
-  top: clamp(0.2rem, 1.2vw, 0.65rem);
-  left: calc(clamp(1rem, 3.5vw, 2.1rem) + 30px);
-  margin: 0;
-  color: #f3f4f6;
-  font-family: var(--font-caps);
-  font-size: clamp(1.25rem, 2.9vw, 1.9rem);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.75),
-    0 0 20px rgba(255, 255, 255, 0.08);
-  z-index: 10;
+/* Sits just under the tweet carousel — light pull-up; nudge down vs previous */
+section.mind-panel.section {
+  padding-top: calc(0.35rem + 50px);
+  margin-top: clamp(-0.65rem, -1.5vw, -0.15rem);
+}
+
+.mind-panel__section-head {
+  position: relative;
+  z-index: 2;
+  animation: section-reveal 1s ease-out both;
 }
 
 .mind-panel__shell {

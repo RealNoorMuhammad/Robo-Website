@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { ROBO_TWEET_IDS } from '../data/roboTweetIds.js'
 import TweetEmbed from './TweetEmbed.jsx'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 import './LatestTweetsSection.css'
 
 const ROBO_HANDLE = 'roboPBOC'
@@ -86,7 +85,10 @@ export default function LatestTweetsSection() {
   return (
     <section id="notebook-feed" className="dn-tweets section" aria-label="X posts">
       <div className="dn-tweets__head dn-tweets__head--minimal">
-        <p className="dn-tweets__kicker">Latest Tweets from Robo</p>
+        <div className="dn-tweets__head-copy">
+          <h2 className="dn-tweets__title">Latest From Robo</h2>
+          <p className="dn-tweets__subtitle">Fresh takes, straight from the source.</p>
+        </div>
         <div className="dn-tweets__nav-group" aria-label="Tweets navigation">
           <button className="dn-tweets__nav dn-tweets__nav--prev" type="button" aria-label="Previous tweets">
             &#8249;
@@ -99,7 +101,7 @@ export default function LatestTweetsSection() {
 
       <div className="dn-tweets__slider-wrap">
         <Swiper
-          modules={[Pagination, Navigation]}
+          modules={[Navigation]}
           className="dn-tweets__slider"
           spaceBetween={18}
           slidesPerView={1}
@@ -115,7 +117,6 @@ export default function LatestTweetsSection() {
             prevEl: '.dn-tweets__nav--prev',
             nextEl: '.dn-tweets__nav--next',
           }}
-          pagination={{ clickable: true }}
           breakpoints={{
             680: { slidesPerView: 2 },
             1100: { slidesPerView: 3 },

@@ -1,4 +1,5 @@
 import DeathNotePanel from './components/DeathNotePanel.jsx'
+import DontMissCall from './components/DontMissCall.jsx'
 import HeroSection from './components/HeroSection.jsx'
 import LatestTweetsSection from './components/LatestTweetsSection.jsx'
 import SiteFooter from './components/SiteFooter.jsx'
@@ -13,6 +14,7 @@ function App() {
       <div className="app__below-divider">
         <LatestTweetsSection />
         <DeathNotePanel />
+        <DontMissCall />
         <SiteFooter />
       </div>
     </div>

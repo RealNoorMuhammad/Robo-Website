@@ -1,0 +1,63 @@
+.dont-miss-call {
+  position: relative;
+  overflow: hidden;
+}
+
+.dont-miss-call::before {
+  content: '';
+  position: absolute;
+  inset: -15% -8% auto;
+  height: 50%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 65% 75% at 50% 0%, rgba(90, 8, 12, 0.18) 0%, transparent 62%);
+  opacity: 0.95;
+}
+
+.dont-miss-call__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dont-miss-call__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.65rem, 3.8vw, 2.15rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0 0 1rem;
+  color: #f4efe6;
+  text-shadow:
+    0 0 36px rgba(179, 18, 23, 0.22),
+    0 2px 0 rgba(0, 0, 0, 0.82);
+}
+
+.dont-miss-call__lede {
+  margin: 0 0 1.75rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #9a9aa2;
+}
+
+.dont-miss-call__handle {
+  color: var(--gold);
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    text-shadow 0.3s ease;
+}
+
+.dont-miss-call__handle:hover {
+  color: #fff;
+  text-shadow: 0 0 16px rgba(255, 46, 46, 0.35);
+}
+
+.dont-miss-call__actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem 1rem;
+}

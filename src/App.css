@@ -103,7 +103,7 @@
 
 .app__below-divider .site-footer {
   border-top-color: rgba(68, 66, 70, 0.45);
-  background: #322b2a;
+  background: #2f2d2d;
 }
 
 .app__below-divider .site-footer__owner {
@@ -389,7 +389,7 @@
   overflow: hidden;
   padding: 0;
   border-top: 0;
-  background: #322b2a;
+  background: #2f2d2d;
   box-shadow: none;
 }
 
@@ -464,7 +464,7 @@
   gap: 2rem;
   border: 0;
   border-radius: 0;
-  background: #322b2a;
+  background: #2f2d2d;
   box-shadow: none;
 }
 
