@@ -23,13 +23,7 @@ export default function DeathNotePanel() {
   }, [paused])
 
   return (
-    <section className="section" aria-labelledby="dn-heading">
-      <header className="section__head">
-        <h2 id="dn-heading" className="section__title">
-          Write a name
-        </h2>
-        <p className="section__lede">Notebook page — dramatic type, slow tension. Symbolic, not literal.</p>
-      </header>
+    <section className="section" aria-label="Notebook panel">
       <div className="dn-panel-wrap">
         <div className="dn-panel">
           <div className="dn-panel__lines" aria-hidden="true" />

@@ -1,0 +1,319 @@
+/* Death Note / Light — notebook field log, crimson seal, dark paper */
+
+.dn-tweets {
+  position: relative;
+  overflow: hidden;
+}
+
+.dn-tweets::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 55%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 80% at 50% 0%, rgba(90, 8, 12, 0.22) 0%, transparent 65%);
+  opacity: 0.9;
+}
+
+.dn-tweets__head {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+}
+
+.dn-tweets__head--minimal {
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.dn-tweets__kicker {
+  font-family: var(--font-caps);
+  font-size: 0.62rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1rem;
+  text-shadow: 0 0 24px rgba(198, 168, 94, 0.2);
+}
+
+.dn-tweets__rule-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: center;
+  margin: 0 auto 1.25rem;
+  max-width: 12rem;
+}
+
+.dn-tweets__anim-line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(179, 18, 23, 0.45) 25%,
+    rgba(198, 168, 94, 0.55) 50%,
+    rgba(179, 18, 23, 0.45) 75%,
+    transparent
+  );
+  border-radius: 2px;
+}
+
+.dn-tweets__anim-line--short {
+  width: 55%;
+  opacity: 0.75;
+}
+
+.dn-tweets__title {
+  font-family: var(--font-deathnote), var(--font-heading);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #f4efe6;
+  text-shadow:
+    0 0 40px rgba(179, 18, 23, 0.25),
+    0 2px 0 rgba(0, 0, 0, 0.85);
+}
+
+.dn-tweets__lede {
+  color: #8e8e94;
+}
+
+.dn-tweets__profile {
+  color: var(--gold);
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    text-shadow 0.35s ease;
+}
+
+.dn-tweets__profile:hover {
+  color: #fff;
+  text-shadow: 0 0 18px rgba(255, 46, 46, 0.4);
+}
+
+.dn-tweets__mono {
+  font-family: ui-monospace, monospace;
+  font-size: 0.82em;
+  color: #a8a0b0;
+}
+
+.dn-tweets__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.35rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .dn-tweets__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .dn-tweets__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.dn-tweets__cell {
+  perspective: 1000px;
+}
+
+.dn-tweets__card {
+  position: relative;
+  height: 100%;
+  min-height: 120px;
+  padding: 0.85rem 0.75rem 1rem;
+  border-radius: 4px;
+  background: linear-gradient(155deg, #0c0c0f 0%, #050506 48%, #08080a 100%);
+  border: 1px solid rgba(55, 42, 44, 0.95);
+  box-shadow:
+    0 22px 56px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.55);
+  transform: rotate(-0.35deg);
+  transition:
+    border-color 0.4s ease,
+    box-shadow 0.45s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+.dn-tweets__cell:nth-child(even) .dn-tweets__card {
+  transform: rotate(0.45deg);
+}
+
+.dn-tweets__card:hover {
+  border-color: rgba(179, 18, 23, 0.5);
+  box-shadow:
+    0 0 22px rgba(179, 18, 23, 0.18),
+    0 26px 64px rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: rotate(0deg) translateY(-3px);
+}
+
+.dn-tweets__card-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 22px,
+    rgba(179, 18, 23, 0.06) 22px,
+    rgba(179, 18, 23, 0.06) 23px
+  );
+  mask-image: linear-gradient(180deg, #000 0%, #000 88%, transparent 100%);
+}
+
+.dn-tweets__card-ornament {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.dn-tweets__seal {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff4a4a, #5a080c 70%);
+  box-shadow: 0 0 12px rgba(255, 46, 46, 0.45);
+  animation: dn-tweets-pulse 3.2s ease-in-out infinite;
+}
+
+.dn-tweets__scratch {
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(198, 168, 94, 0.5), transparent);
+  transform: rotate(-8deg);
+}
+
+@keyframes dn-tweets-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.dn-tweets__embed-wrap {
+  position: relative;
+  z-index: 1;
+  min-height: 180px;
+}
+
+.dn-tweets__embed-wrap .twitter-tweet {
+  margin: 0 !important;
+}
+
+.dn-tweets__embed-wrap iframe {
+  border-radius: 2px !important;
+}
+
+.dn-tweets__card-glow {
+  position: absolute;
+  inset: auto -30% -40%;
+  height: 60%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, rgba(179, 18, 23, 0.12) 0%, transparent 65%);
+  opacity: 0.7;
+}
+
+.dn-tweets__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.dn-tweets__more {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.dn-tweets__more-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.95rem 2.25rem;
+  font-family: var(--font-caps);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #f0ebe3;
+  background: linear-gradient(165deg, #101014 0%, #060607 45%, #0a0a0d 100%);
+  border: 1px solid rgba(55, 42, 44, 0.95);
+  border-radius: 3px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 0.3s ease,
+    color 0.25s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dn-tweets__more:hover .dn-tweets__more-inner {
+  border-color: rgba(179, 18, 23, 0.55);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.dn-tweets__more:focus-visible .dn-tweets__more-inner {
+  outline: 2px solid var(--glow-red);
+  outline-offset: 3px;
+}
+
+.dn-tweets__more-text {
+  position: relative;
+}
+
+.dn-tweets__more-glyph {
+  font-size: 1.1rem;
+  color: var(--gold);
+  filter: drop-shadow(0 0 8px rgba(198, 168, 94, 0.35));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-tweets__seal {
+    animation: none;
+  }
+
+  .dn-tweets__card {
+    transform: none;
+  }
+
+  .dn-tweets__cell:nth-child(even) .dn-tweets__card {
+    transform: none;
+  }
+
+  .dn-tweets__card:hover {
+    transform: none;
+  }
+
+  .dn-tweets__more:hover .dn-tweets__more-inner {
+    transform: none;
+  }
+}

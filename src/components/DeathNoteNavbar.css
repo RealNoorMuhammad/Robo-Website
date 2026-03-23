@@ -1,0 +1,315 @@
+/* —— Death Note — fixed bar, music player only —— */
+.dn-navbar {
+  --dn-nav-h: clamp(3.35rem, 9vw, 4rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  height: var(--dn-nav-h);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  isolation: isolate;
+  background: linear-gradient(180deg, rgba(5, 5, 7, 0.99) 0%, rgba(2, 2, 3, 0.96) 100%);
+  border-bottom: 1px solid rgba(48, 32, 36, 0.95);
+  box-shadow:
+    0 20px 56px rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(198, 168, 94, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dn-navbar__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    transparent 18%,
+    transparent 82%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  opacity: 0.85;
+}
+
+.dn-navbar__ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 100% at 50% -35%, rgba(179, 18, 23, 0.16) 0%, transparent 50%),
+    radial-gradient(ellipse 45% 90% at 15% 50%, rgba(60, 10, 14, 0.14) 0%, transparent 42%),
+    radial-gradient(ellipse 45% 90% at 85% 50%, rgba(60, 10, 14, 0.14) 0%, transparent 42%);
+  animation: dn-navbar-ambient 8s ease-in-out infinite;
+}
+
+@keyframes dn-navbar-ambient {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dn-navbar__lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.26;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 19px,
+    rgba(179, 18, 23, 0.055) 19px,
+    rgba(179, 18, 23, 0.055) 20px
+  );
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.dn-navbar__rim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(198, 168, 94, 0.22) 20%,
+    rgba(179, 18, 23, 0.58) 50%,
+    rgba(198, 168, 94, 0.22) 80%,
+    transparent
+  );
+  animation: dn-navbar-rim 5s ease-in-out infinite;
+}
+
+@keyframes dn-navbar-rim {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.dn-navbar__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.dn-navbar__player {
+  position: relative;
+  width: clamp(3rem, 7.5vw, 3.5rem);
+  height: clamp(3rem, 7.5vw, 3.5rem);
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 28%, #18181d 0%, #09090b 52%, #040405 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.045),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.6),
+    0 10px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(35, 28, 30, 0.98);
+  color: #f0ebe3;
+  transition:
+    box-shadow 0.35s ease,
+    color 0.25s ease;
+}
+
+.dn-navbar__player:hover {
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.6),
+    0 14px 40px rgba(0, 0, 0, 0.58),
+    0 0 0 1px rgba(179, 18, 23, 0.4),
+    0 0 32px rgba(179, 18, 23, 0.38);
+  color: #fff;
+}
+
+.dn-navbar__player:focus-visible {
+  outline: 2px solid var(--glow-red);
+  outline-offset: 3px;
+}
+
+.dn-navbar__player.is-playing {
+  color: #fff;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.6),
+    0 14px 40px rgba(0, 0, 0, 0.58),
+    0 0 0 1px rgba(179, 18, 23, 0.48),
+    0 0 40px rgba(255, 46, 46, 0.25);
+}
+
+.dn-navbar__player-bloom {
+  position: absolute;
+  inset: -38%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(179, 18, 23, 0.38) 0%, transparent 56%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.dn-navbar__player.is-playing .dn-navbar__player-bloom {
+  opacity: 0.88;
+  animation: dn-player-bloom 2.6s ease-in-out infinite;
+}
+
+@keyframes dn-player-bloom {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.62;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.95;
+  }
+}
+
+.dn-navbar__player-ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid rgba(198, 168, 94, 0.22);
+  pointer-events: none;
+  opacity: 0.88;
+}
+
+.dn-navbar__player-ring.is-active {
+  border-color: rgba(179, 18, 23, 0.52);
+  animation: dn-player-ring-spin 10s linear infinite;
+}
+
+@keyframes dn-player-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dn-navbar__player-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.028) 0deg 4deg,
+    rgba(0, 0, 0, 0.14) 4deg 8deg
+  );
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.dn-navbar__player.is-playing .dn-navbar__player-disc {
+  opacity: 0.88;
+  animation: dn-player-disc-spin 12s linear infinite;
+}
+
+@keyframes dn-player-disc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dn-navbar__player-groove {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.dn-navbar__player-hub {
+  position: absolute;
+  inset: 42%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #26262c 0%, #0a0a0c 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.dn-navbar__player-icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.dn-navbar__player-icon svg {
+  width: 42%;
+  height: 42%;
+  filter: drop-shadow(0 0 10px rgba(179, 18, 23, 0.4));
+}
+
+.dn-navbar__eq {
+  position: absolute;
+  bottom: -0.38rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 0.9rem;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.dn-navbar__eq-bar {
+  width: 3px;
+  border-radius: 1px;
+  height: 0.25rem;
+  background: rgba(198, 168, 94, 0.22);
+  transition: height 0.25s ease, background 0.25s ease;
+}
+
+.dn-navbar__eq-bar.is-active {
+  background: linear-gradient(180deg, #ff6b6b 0%, #b31217 100%);
+  animation: dn-eq-dance 0.6s ease-in-out infinite alternate;
+  animation-delay: calc(var(--dn-eq-i) * 0.08s);
+}
+
+@keyframes dn-eq-dance {
+  from {
+    height: 0.25rem;
+  }
+  to {
+    height: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-navbar__ambient,
+  .dn-navbar__rim,
+  .dn-navbar__player-bloom,
+  .dn-navbar__player-ring.is-active,
+  .dn-navbar__player.is-playing .dn-navbar__player-disc,
+  .dn-navbar__eq-bar.is-active {
+    animation: none !important;
+  }
+
+  .dn-navbar__player.is-playing .dn-navbar__player-bloom {
+    opacity: 0.55;
+  }
+}

@@ -1,155 +1,156 @@
-import { useEffect, useMemo, useState } from 'react'
-import fallbackTweets from '../data/latestTweets.json'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { motion as Motion, useReducedMotion } from 'framer-motion'
+import gsap from 'gsap'
+import { ROBO_TWEET_IDS } from '../data/roboTweetIds.js'
+import TweetEmbed from './TweetEmbed.jsx'
 import './LatestTweetsSection.css'
 
-const X_HANDLE = 'roboPBOC'
-const X_PROFILE = `https://x.com/${X_HANDLE}`
+const INITIAL_COUNT = 6
+const LOAD_MORE = 3
 
-function tweetPermalink(id) {
-  return `https://x.com/${X_HANDLE}/status/${id}`
-}
-
-function formatNotebookDate(iso) {
-  const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return '—'
-  return d
-    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    .toUpperCase()
-}
-
-function formatRelative(iso) {
-  const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return ''
-  const sec = Math.round((d.getTime() - Date.now()) / 1000)
-  const abs = Math.abs(sec)
-  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
-  if (abs < 60) return rtf.format(Math.round(sec / 1), 'second')
-  if (abs < 3600) return rtf.format(Math.round(sec / 60), 'minute')
-  if (abs < 86400) return rtf.format(Math.round(sec / 3600), 'hour')
-  if (abs < 604800) return rtf.format(Math.round(sec / 86400), 'day')
-  if (abs < 2629800) return rtf.format(Math.round(sec / 604800), 'week')
-  return rtf.format(Math.round(sec / 2629800), 'month')
-}
-
-function normalizeTweets(raw) {
-  if (!Array.isArray(raw)) return []
-  return raw
-    .filter((t) => t && typeof t.text === 'string' && t.text.trim())
-    .map((t) => ({
-      id: String(t.id ?? ''),
-      text: t.text.trim(),
-      createdAt: typeof t.createdAt === 'string' ? t.createdAt : new Date().toISOString(),
-    }))
-    .slice(0, 12)
+function parseEnvIds() {
+  const raw = import.meta.env.VITE_TWEET_IDS?.trim()
+  if (!raw) return null
+  const parts = raw.split(/[\s,]+/).filter(Boolean)
+  return parts.length ? parts : null
 }
 
 export default function LatestTweetsSection() {
-  const [tweets, setTweets] = useState(() => normalizeTweets(fallbackTweets))
-  const [status, setStatus] = useState('idle')
+  const reduceMotion = useReducedMotion()
+  const headRef = useRef(null)
+  const btnRef = useRef(null)
 
-  const sourceUrl = import.meta.env.VITE_TWEETS_JSON_URL
+  const tweetIds = useMemo(() => {
+    const fromEnv = parseEnvIds()
+    const raw = fromEnv ?? ROBO_TWEET_IDS
+    const unique = [...new Set(raw.map(String))]
+    return unique.sort((a, b) => {
+      try {
+        if (BigInt(a) < BigInt(b)) return 1
+        if (BigInt(a) > BigInt(b)) return -1
+        return 0
+      } catch {
+        return 0
+      }
+    })
+  }, [])
+
+  const [visibleCount, setVisibleCount] = useState(() => Math.min(INITIAL_COUNT, tweetIds.length))
+
+  const visibleIds = useMemo(() => tweetIds.slice(0, visibleCount), [tweetIds, visibleCount])
+  const canShowMore = visibleCount < tweetIds.length
 
   useEffect(() => {
-    if (!sourceUrl || !sourceUrl.trim()) {
-      setStatus('fallback')
-      return
+    if (reduceMotion || !headRef.current) return
+    const el = headRef.current
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el.querySelectorAll('.dn-tweets__anim-line'),
+        { scaleX: 0, opacity: 0.3 },
+        {
+          scaleX: 1,
+          opacity: 1,
+          duration: 1.05,
+          stagger: 0.12,
+          ease: 'power3.out',
+          delay: 0.15,
+        },
+      )
+    }, headRef)
+    return () => ctx.revert()
+  }, [reduceMotion])
+
+  useEffect(() => {
+    if (reduceMotion || !btnRef.current) return
+    const btn = btnRef.current
+    const onEnter = () => {
+      gsap.to(btn, {
+        boxShadow: '0 0 28px rgba(179, 18, 23, 0.45), inset 0 1px 0 rgba(255,255,255,0.08)',
+        duration: 0.35,
+        ease: 'power2.out',
+      })
     }
-
-    let cancelled = false
-    setStatus('loading')
-
-    fetch(sourceUrl.trim(), { cache: 'no-store' })
-      .then((res) => {
-        if (!res.ok) throw new Error(String(res.status))
-        return res.json()
+    const onLeave = () => {
+      gsap.to(btn, {
+        boxShadow: '0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)',
+        duration: 0.45,
+        ease: 'power2.out',
       })
-      .then((data) => {
-        if (cancelled) return
-        const next = normalizeTweets(data)
-        if (next.length) {
-          setTweets(next)
-          setStatus('live')
-        } else {
-          setTweets(normalizeTweets(fallbackTweets))
-          setStatus('empty')
-        }
-      })
-      .catch(() => {
-        if (cancelled) return
-        setTweets(normalizeTweets(fallbackTweets))
-        setStatus('error')
-      })
-
+    }
+    btn.addEventListener('mouseenter', onEnter)
+    btn.addEventListener('mouseleave', onLeave)
     return () => {
-      cancelled = true
+      btn.removeEventListener('mouseenter', onEnter)
+      btn.removeEventListener('mouseleave', onLeave)
     }
-  }, [sourceUrl])
+  }, [reduceMotion])
 
-  const profileLine = useMemo(
-    () => (
-      <a className="x-feed__profile" href={X_PROFILE} target="_blank" rel="noopener noreferrer">
-        @{X_HANDLE}
-      </a>
-    ),
-    [],
-  )
+  const onShowMore = useCallback(() => {
+    setVisibleCount((n) => Math.min(n + LOAD_MORE, tweetIds.length))
+  }, [tweetIds.length])
 
   return (
-    <section id="feed" className="x-feed section" aria-labelledby="x-feed-heading">
-      <header className="section__head x-feed__head">
-        <p className="x-feed__kicker">Field log · X</p>
-        <h2 id="x-feed-heading" className="section__title x-feed__title">
-          Pages written in real time
-        </h2>
-        <p className="section__lede x-feed__lede">
-          Latest lines from {profileLine}. Cards pull from{' '}
-          <code className="x-feed__code">latestTweets.json</code> unless{' '}
-          <code className="x-feed__code">VITE_TWEETS_JSON_URL</code> is set to a JSON array of{' '}
-          <code className="x-feed__code">id</code>, <code className="x-feed__code">text</code>,{' '}
-          <code className="x-feed__code">createdAt</code>.
-        </p>
-        {status === 'loading' && <p className="x-feed__status x-feed__status--load">Syncing…</p>}
-        {status === 'error' && (
-          <p className="x-feed__status x-feed__status--warn">Remote feed unavailable — showing local pages.</p>
-        )}
-        {status === 'empty' && (
-          <p className="x-feed__status x-feed__status--warn">Remote feed empty — showing local pages.</p>
-        )}
-      </header>
+    <section id="notebook-feed" className="dn-tweets section" aria-label="X posts">
+      <div ref={headRef} className="dn-tweets__head dn-tweets__head--minimal">
+        <p className="dn-tweets__kicker">Death Note · Field transmission</p>
+        <div className="dn-tweets__rule-lines" aria-hidden="true">
+          <span className="dn-tweets__anim-line" />
+          <span className="dn-tweets__anim-line dn-tweets__anim-line--short" />
+        </div>
+      </div>
 
-      <div className="x-feed__grid">
-        {tweets.map((t, i) => (
-          <article
-            key={`${t.id}-${i}`}
-            className="x-feed__card"
-            style={{ '--x-feed-i': String(i) }}
+      <div className="dn-tweets__grid">
+        {visibleIds.map((id, i) => (
+          <Motion.div
+            key={id}
+            className="dn-tweets__cell"
+            initial={reduceMotion ? false : { opacity: 0, y: 28, rotateX: -6 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, rotateX: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              type: 'spring',
+              stiffness: 120,
+              damping: 22,
+              delay: reduceMotion ? 0 : Math.min(i * 0.06, 0.42),
+            }}
           >
-            <div className="x-feed__card-lines" aria-hidden="true" />
-            <div className="x-feed__card-inner">
-              <div className="x-feed__card-meta">
-                <span className="x-feed__card-stamp">ENTRY</span>
-                <time className="x-feed__card-date" dateTime={t.createdAt}>
-                  {formatNotebookDate(t.createdAt)}
-                </time>
-                <span className="x-feed__card-relative">{formatRelative(t.createdAt)}</span>
+            <div className="dn-tweets__card">
+              <div className="dn-tweets__card-ornament" aria-hidden="true">
+                <span className="dn-tweets__seal" />
+                <span className="dn-tweets__scratch" />
               </div>
-              <p className="x-feed__card-text">{t.text}</p>
-              <a
-                className="x-feed__card-link"
-                href={tweetPermalink(encodeURIComponent(t.id))}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Open on X
-                <span className="x-feed__card-link-arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
+              <div className="dn-tweets__card-lines" aria-hidden="true" />
+              <div className="dn-tweets__embed-wrap">
+                <TweetEmbed tweetId={id} />
+              </div>
+              <div className="dn-tweets__card-glow" aria-hidden="true" />
             </div>
-            <div className="x-feed__card-glow" aria-hidden="true" />
-          </article>
+          </Motion.div>
         ))}
       </div>
+
+      {canShowMore && (
+        <Motion.div
+          className="dn-tweets__actions"
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <button
+            ref={btnRef}
+            type="button"
+            className="dn-tweets__more"
+            onClick={onShowMore}
+          >
+            <span className="dn-tweets__more-inner">
+              <span className="dn-tweets__more-text">View more</span>
+              <span className="dn-tweets__more-glyph" aria-hidden="true">
+                ✎
+              </span>
+            </span>
+          </button>
+        </Motion.div>
+      )}
     </section>
   )
 }
