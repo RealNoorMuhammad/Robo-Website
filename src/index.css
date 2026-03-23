@@ -39,7 +39,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -61,4 +61,11 @@ a {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Performance: disable decorative CSS animations site-wide (keeps transitions for hovers) */
+*,
+*::before,
+*::after {
+  animation: none !important;
 }

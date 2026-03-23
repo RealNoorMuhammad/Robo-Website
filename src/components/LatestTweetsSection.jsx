@@ -1,7 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { motion as Motion, useReducedMotion } from 'framer-motion'
-import gsap from 'gsap'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { useEffect, useMemo, useState } from 'react'
+import { Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { ROBO_TWEET_IDS } from '../data/roboTweetIds.js'
 import TweetEmbed from './TweetEmbed.jsx'
@@ -60,8 +58,6 @@ async function fetchLatestRoboTweetIds(signal) {
 }
 
 export default function LatestTweetsSection() {
-  const reduceMotion = useReducedMotion()
-  const headRef = useRef(null)
   const envTweetIds = useMemo(() => parseEnvIds(), [])
 
   const [tweetIds, setTweetIds] = useState(() => sortTweetIds(envTweetIds ?? ROBO_TWEET_IDS))
@@ -87,29 +83,9 @@ export default function LatestTweetsSection() {
     }
   }, [envTweetIds])
 
-  useEffect(() => {
-    if (reduceMotion || !headRef.current) return
-    const el = headRef.current
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        el.querySelectorAll('.dn-tweets__anim-line'),
-        { scaleX: 0, opacity: 0.3 },
-        {
-          scaleX: 1,
-          opacity: 1,
-          duration: 1.05,
-          stagger: 0.12,
-          ease: 'power3.out',
-          delay: 0.15,
-        },
-      )
-    }, headRef)
-    return () => ctx.revert()
-  }, [reduceMotion])
-
   return (
     <section id="notebook-feed" className="dn-tweets section" aria-label="X posts">
-      <div ref={headRef} className="dn-tweets__head dn-tweets__head--minimal">
+      <div className="dn-tweets__head dn-tweets__head--minimal">
         <p className="dn-tweets__kicker">Latest Tweets from Robo</p>
         <div className="dn-tweets__nav-group" aria-label="Tweets navigation">
           <button className="dn-tweets__nav dn-tweets__nav--prev" type="button" aria-label="Previous tweets">
@@ -123,7 +99,7 @@ export default function LatestTweetsSection() {
 
       <div className="dn-tweets__slider-wrap">
         <Swiper
-          modules={[Pagination, Navigation, ...(reduceMotion ? [] : [Autoplay])]}
+          modules={[Pagination, Navigation]}
           className="dn-tweets__slider"
           spaceBetween={18}
           slidesPerView={1}
@@ -139,34 +115,15 @@ export default function LatestTweetsSection() {
             prevEl: '.dn-tweets__nav--prev',
             nextEl: '.dn-tweets__nav--next',
           }}
-          autoplay={
-            reduceMotion
-              ? false
-              : {
-                  delay: 3200,
-                  disableOnInteraction: false,
-                  pauseOnMouseEnter: true,
-                }
-          }
           pagination={{ clickable: true }}
           breakpoints={{
             680: { slidesPerView: 2 },
             1100: { slidesPerView: 3 },
           }}
         >
-          {tweetIds.map((id, i) => (
+          {tweetIds.map((id) => (
             <SwiperSlide key={id} className="dn-tweets__slide">
-              <Motion.div
-                className="dn-tweets__cell"
-                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.5,
-                  ease: 'easeOut',
-                  delay: reduceMotion ? 0 : Math.min(i * 0.04, 0.18),
-                }}
-              >
+              <div className="dn-tweets__cell">
                 <div className="dn-tweets__card">
                   <div className="dn-tweets__card-ornament" aria-hidden="true">
                     <span className="dn-tweets__seal" />
@@ -178,7 +135,7 @@ export default function LatestTweetsSection() {
                   </div>
                   <div className="dn-tweets__card-glow" aria-hidden="true" />
                 </div>
-              </Motion.div>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { motion as Motion, useReducedMotion } from 'framer-motion'
 import kyrieSrc from './Kyrie.mp3'
 import './DeathNoteNavbar.css'
 
 export default function DeathNoteNavbar() {
-  const reduceMotion = useReducedMotion()
   const audioRef = useRef(null)
   const [playing, setPlaying] = useState(false)
 
@@ -44,23 +42,15 @@ export default function DeathNoteNavbar() {
       <div className="dn-navbar__vignette" aria-hidden="true" />
 
       <div className="dn-navbar__inner">
-        <Motion.button
+        <button
           type="button"
           className={`dn-navbar__player${playing ? ' is-playing' : ''}`}
           onClick={toggle}
           aria-pressed={playing}
           aria-label={playing ? 'Pause music' : 'Play music'}
-          whileHover={reduceMotion ? undefined : { scale: 1.04 }}
-          whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-          initial={reduceMotion ? false : { opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="dn-navbar__player-bloom" aria-hidden="true" />
-          <span
-            className={`dn-navbar__player-ring${playing && !reduceMotion ? ' is-active' : ''}`}
-            aria-hidden="true"
-          />
+          <span className={`dn-navbar__player-ring${playing ? ' is-active' : ''}`} aria-hidden="true" />
           <span className="dn-navbar__player-disc" aria-hidden="true">
             <span className="dn-navbar__player-groove" />
             <span className="dn-navbar__player-hub" />
@@ -81,12 +71,12 @@ export default function DeathNoteNavbar() {
             {[0, 1, 2, 3, 4].map((i) => (
               <span
                 key={i}
-                className={`dn-navbar__eq-bar${playing && !reduceMotion ? ' is-active' : ''}`}
+                className={`dn-navbar__eq-bar${playing ? ' is-active' : ''}`}
                 style={{ '--dn-eq-i': String(i) }}
               />
             ))}
           </span>
-        </Motion.button>
+        </button>
       </div>
     </header>
   )

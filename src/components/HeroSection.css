@@ -4,11 +4,7 @@
   padding: clamp(4.5rem, 10vw, 6rem) clamp(1.25rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(ellipse 72% 56% at 78% 28%, rgba(168, 148, 102, 0.13) 0%, transparent 58%),
-    radial-gradient(ellipse 86% 62% at 74% 40%, rgba(128, 11, 20, 0.22) 0%, transparent 66%),
-    radial-gradient(ellipse 92% 84% at 12% 100%, rgba(58, 8, 12, 0.22) 0%, transparent 62%),
-    linear-gradient(180deg, #090a0d 0%, #060609 58%, #040406 100%);
+  background: #322b2a;
 }
 
 .hero::before,

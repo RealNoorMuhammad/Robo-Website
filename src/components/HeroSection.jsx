@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
 import robos from '../assets/robo.png'
 import HeroDeathNoteTitle from './HeroDeathNoteTitle.jsx'
 import HeroElectric from './HeroElectric.jsx'
@@ -22,40 +20,10 @@ const SMOKE_PLUMES = Array.from({ length: 12 }, (_, i) => ({
 }))
 
 export default function HeroSection() {
-  const arrowRef = useRef(null)
-  const arrowCoreRef = useRef(null)
-
-  useEffect(() => {
-    if (!arrowRef.current || !arrowCoreRef.current) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const ctx = gsap.context(() => {
-      gsap.to(arrowRef.current, {
-        y: 10,
-        duration: 1.35,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-      })
-
-      gsap.to(arrowCoreRef.current, {
-        boxShadow: '0 0 28px rgba(179, 18, 23, 0.68), 0 0 52px rgba(90, 8, 12, 0.44)',
-        duration: 1.6,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-      })
-    })
-
-    return () => {
-      ctx.revert()
-    }
-  }, [])
-
   const handleArrowClick = () => {
     const nextSection = document.querySelector('.app__below-divider')
     if (!nextSection) return
-    nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    nextSection.scrollIntoView({ behavior: 'auto', block: 'start' })
   }
 
   return (
@@ -171,13 +139,12 @@ export default function HeroSection() {
       </div>
 
       <button
-        ref={arrowRef}
         type="button"
         className="hero__scroll-arrow"
         onClick={handleArrowClick}
         aria-label="Scroll down"
       >
-        <span className="hero__scroll-arrow-core" ref={arrowCoreRef} aria-hidden="true">
+        <span className="hero__scroll-arrow-core" aria-hidden="true">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 17.2L5.3 10.5l1.4-1.4 5.3 5.3 5.3-5.3 1.4 1.4L12 17.2z" fill="currentColor" />
           </svg>
