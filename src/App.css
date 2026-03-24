@@ -1,11 +1,40 @@
 .app {
   position: relative;
   min-height: 100svh;
-  background: var(--bg-primary);
+  background: transparent;
 }
 
+/* Fixed full-viewport photo (low opacity) + dark scrim — sits behind all app content */
 .app::before {
-  content: none;
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #050505;
+  background-image: url('./assets/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.32;
+}
+
+.app::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 120% 70% at 50% -10%, rgba(0, 0, 0, 0.45) 0%, transparent 52%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.78) 42%, rgba(0, 0, 0, 0.88) 100%);
+}
+
+@media (prefers-reduced-motion: reduce), (max-width: 900px) {
+  .app::before {
+    background-attachment: scroll;
+  }
 }
 
 .app > *:not(.cursor-trail) {
@@ -47,7 +76,7 @@
 .app__below-divider {
   position: relative;
   z-index: 1;
-  background: var(--bg-primary);
+  background: transparent;
 }
 
 /* Faint blood-red rings (reference layout) */
@@ -99,7 +128,7 @@
 
 .app__below-divider .site-footer {
   border-top-color: rgba(68, 66, 70, 0.45);
-  background: #141414;
+  background: transparent;
 }
 
 .app__below-divider .site-footer__owner {
@@ -385,7 +414,7 @@
   overflow: hidden;
   padding: 0;
   border-top: 0;
-  background: #141414;
+  background: transparent;
   box-shadow: none;
 }
 
@@ -460,7 +489,7 @@
   gap: 2rem;
   border: 0;
   border-radius: 0;
-  background: #141414;
+  background: rgba(0, 0, 0, 0.62);
   box-shadow: none;
 }
 

@@ -350,11 +350,16 @@ section.dn-tweets.section {
   }
 }
 
+/* Fills all remaining space inside the 450px card so the loading skeleton covers the full card body */
 .dn-tweets__embed-wrap {
   position: relative;
   z-index: 1;
   flex: 1 1 0;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -362,13 +367,21 @@ section.dn-tweets.section {
 
 .dn-tweets__embed-inner {
   position: relative;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
   min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dn-tweets__embed-mount {
   position: relative;
   z-index: 2;
+  flex: 1 1 auto;
   min-height: 0;
+  width: 100%;
 }
 
 .dn-tweets__embed-wrap iframe {
@@ -379,6 +392,10 @@ section.dn-tweets.section {
   position: absolute;
   inset: 0;
   z-index: 3;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
   display: grid;
   align-content: start;
   gap: 0.7rem;

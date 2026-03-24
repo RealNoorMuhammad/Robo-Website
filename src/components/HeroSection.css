@@ -4,7 +4,7 @@
   padding: clamp(4.5rem, 10vw, 6rem) clamp(1.25rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
   overflow: hidden;
   isolation: isolate;
-  background: var(--bg-primary);
+  background: transparent;
 }
 
 .hero::before,
