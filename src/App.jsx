@@ -13,7 +13,7 @@ function App() {
 
       <div className="app__below-divider">
         <LatestTweetsSection />
-        <DeathNotePanel />
+    
         <DontMissCall />
         <SiteFooter />
       </div>
