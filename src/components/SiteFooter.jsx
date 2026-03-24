@@ -1,6 +1,17 @@
+import { FaTelegramPlane } from 'react-icons/fa'
+import terminalLogo from '../assets/terminal.png'
+
 const LINKS = [
-  { label: 'Trade on Padre', href: 'https://trade.padre.gg/rk/robo' },
-  { label: 'Telegram — Robo Gems', href: 'https://t.me/robogems' },
+  {
+    label: 'TRADE ON TERMINAL',
+    href: 'https://trade.padre.gg/rk/robo',
+    icon: <img src={terminalLogo} alt="" className="site-footer__link-icon site-footer__link-icon--image" />,
+  },
+  {
+    label: 'TELEGRAM CHANNEL - ROBO CALLS',
+    href: 'https://t.me/robogems',
+    icon: <FaTelegramPlane className="site-footer__link-icon" aria-hidden="true" />,
+  },
 ]
 
 export default function SiteFooter() {
@@ -18,6 +29,11 @@ export default function SiteFooter() {
             <a href="https://x.com/roboPBOC" target="_blank" rel="noopener noreferrer">
               @roboPBOC
             </a>
+            <br />
+            Telegram (PERSONAL):{' '}
+            <a href="https://t.me/robo_pboc" target="_blank" rel="noopener noreferrer">
+              @robo_pboc
+            </a>
           </p>
         </div>
 
@@ -25,7 +41,10 @@ export default function SiteFooter() {
           {LINKS.map((l) => (
             <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer">
               <span className="site-footer__link-glow" aria-hidden="true" />
-              <span className="site-footer__link-inner">{l.label}</span>
+              <span className="site-footer__link-inner">
+                {l.icon}
+                <span>{l.label}</span>
+              </span>
             </a>
           ))}
         </nav>
