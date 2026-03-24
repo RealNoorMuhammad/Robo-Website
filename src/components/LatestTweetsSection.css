@@ -3,6 +3,7 @@
 .dn-tweets {
   position: relative;
   overflow: hidden;
+  --dn-tweets-card-height: 450px;
 }
 
 /* Pull section end flush to next block — .section default bottom padding is huge */
@@ -224,12 +225,6 @@ section.dn-tweets.section {
 }
 
 @media (max-width: 899px) {
-  /* Twitter iframe can swallow touch events; disable pointer capture on mobile so swipe works. */
-  .dn-tweets__embed-wrap iframe,
-  .dn-tweets__embed-wrap .twitter-tweet {
-    pointer-events: none !important;
-  }
-
   .dn-tweets__nav {
     width: 2.15rem;
     height: 2.15rem;
@@ -250,19 +245,29 @@ section.dn-tweets.section {
   }
 }
 
+/* Fixed-height cards; slides size to the card, not the iframe */
 .dn-tweets__slide {
   height: auto;
+  display: flex;
+  align-items: stretch;
 }
 
 .dn-tweets__cell {
   perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .dn-tweets__card {
   position: relative;
-  height: 100%;
-  min-height: 120px;
-  padding: 0.85rem 0.75rem 1rem;
+  box-sizing: border-box;
+  height: var(--dn-tweets-card-height);
+  min-height: var(--dn-tweets-card-height);
+  max-height: var(--dn-tweets-card-height);
+  padding: 0.35rem 0.45rem 0.4rem;
+  display: flex;
+  flex-direction: column;
   border-radius: 4px;
   background: linear-gradient(155deg, #0c0c0f 0%, #050506 48%, #08080a 100%);
   border: 1px solid rgba(55, 42, 44, 0.95);
@@ -308,8 +313,8 @@ section.dn-tweets.section {
 
 .dn-tweets__card-ornament {
   position: absolute;
-  top: 0.65rem;
-  right: 0.75rem;
+  top: 0.3rem;
+  right: 0.4rem;
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -348,18 +353,26 @@ section.dn-tweets.section {
 .dn-tweets__embed-wrap {
   position: relative;
   z-index: 1;
-  min-height: 180px;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dn-tweets__embed-inner {
   position: relative;
-  min-height: 180px;
+  min-height: 0;
 }
 
 .dn-tweets__embed-mount {
   position: relative;
   z-index: 2;
-  min-height: 180px;
+  min-height: 0;
+}
+
+.dn-tweets__embed-wrap iframe {
+  max-width: 100% !important;
 }
 
 .dn-tweets__embed-skeleton {
