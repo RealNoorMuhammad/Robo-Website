@@ -23,7 +23,7 @@ export default function HeroSection() {
   const handleArrowClick = () => {
     const nextSection = document.querySelector('.app__below-divider')
     if (!nextSection) return
-    nextSection.scrollIntoView({ behavior: 'auto', block: 'start' })
+    nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   return (

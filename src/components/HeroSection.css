@@ -1980,7 +1980,10 @@
   }
 
   .hero__scroll-arrow {
-    display: none;
+    display: inline-flex;
+    bottom: calc(clamp(0.8rem, 4vw, 1.35rem) - 5px);
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 
