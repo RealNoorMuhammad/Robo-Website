@@ -135,10 +135,10 @@ section.mind-panel.section {
   width: min(74vw, 30.5rem);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 1px solid rgba(179, 18, 23, 0.58);
+  border: 1px solid rgba(139, 0, 0, 0.58);
   box-shadow:
     0 0 0 1px rgba(55, 8, 12, 0.38),
-    0 0 24px rgba(179, 18, 23, 0.26);
+    0 0 24px rgba(139, 0, 0, 0.26);
   pointer-events: none;
 }
 
@@ -153,10 +153,10 @@ section.mind-panel.section {
   width: min(68vw, 28rem);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 1.5px solid rgba(179, 18, 23, 0.9);
+  border: 1.5px solid rgba(139, 0, 0, 0.9);
   box-shadow:
     0 0 0 1px rgba(55, 8, 12, 0.65),
-    0 0 30px rgba(179, 18, 23, 0.38),
+    0 0 30px rgba(139, 0, 0, 0.38),
     0 0 80px rgba(90, 8, 12, 0.22);
   pointer-events: none;
 }
@@ -197,7 +197,7 @@ section.mind-panel.section {
   max-width: 92%;
   text-shadow:
     0 3px 0 rgba(0, 0, 0, 0.8),
-    0 0 30px rgba(179, 18, 23, 0.45);
+    0 0 30px rgba(139, 0, 0, 0.45);
   animation: mind-panel-pop 0.28s ease;
 }
 
@@ -227,7 +227,7 @@ section.mind-panel.section {
 
 .mind-panel__quote {
   margin: 0.45rem 0 0;
-  color: rgba(198, 168, 94, 0.88);
+  color: rgba(139, 0, 0, 0.88);
   font-family: var(--font-caps);
   font-size: 0.58rem;
   letter-spacing: 0.18em;

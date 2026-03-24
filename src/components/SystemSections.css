@@ -31,7 +31,7 @@
 
 .system-x__handle:hover {
   color: #fff;
-  text-shadow: 0 0 18px rgba(255, 46, 46, 0.4);
+  text-shadow: 0 0 18px rgba(196, 30, 30, 0.4);
 }
 
 /* —— Death Note card grid —— */
@@ -134,7 +134,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.045),
     inset 0 -1px 0 rgba(0, 0, 0, 0.55),
     0 18px 48px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(179, 18, 23, 0.1);
+    0 0 0 1px rgba(139, 0, 0, 0.1);
   transform: rotate(-0.35deg);
   animation: dn-feed-card-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   animation-delay: calc(var(--dn-card-i) * 0.07s);
@@ -206,8 +206,8 @@
   border-radius: 5px;
   background: linear-gradient(
     135deg,
-    rgba(198, 168, 94, 0.12) 0%,
-    rgba(179, 18, 23, 0.18) 45%,
+    rgba(139, 0, 0, 0.12) 0%,
+    rgba(139, 0, 0, 0.18) 45%,
     rgba(40, 8, 12, 0.35) 100%
   );
   opacity: 0.65;
@@ -236,8 +236,8 @@
     0deg,
     transparent,
     transparent 26px,
-    rgba(179, 18, 23, 0.06) 26px,
-    rgba(179, 18, 23, 0.06) 27px
+    rgba(139, 0, 0, 0.06) 26px,
+    rgba(139, 0, 0, 0.06) 27px
   );
 }
 
@@ -252,9 +252,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(198, 168, 94, 0.4) 30%,
-    rgba(179, 18, 23, 0.75) 50%,
-    rgba(198, 168, 94, 0.4) 70%,
+    rgba(139, 0, 0, 0.4) 30%,
+    rgba(139, 0, 0, 0.75) 50%,
+    rgba(139, 0, 0, 0.4) 70%,
     transparent
   );
 }
@@ -266,14 +266,14 @@
   font-size: 0.55rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(179, 18, 23, 0.85);
+  color: rgba(139, 0, 0, 0.85);
   margin: 0 0 0.75rem;
-  text-shadow: 0 0 20px rgba(179, 18, 23, 0.25);
+  text-shadow: 0 0 20px rgba(139, 0, 0, 0.25);
 }
 
 .dn-feed-card__stamp--gold {
-  color: rgba(198, 168, 94, 0.9);
-  text-shadow: 0 0 18px rgba(198, 168, 94, 0.2);
+  color: rgba(139, 0, 0, 0.9);
+  text-shadow: 0 0 18px rgba(139, 0, 0, 0.2);
 }
 
 .dn-feed-card__host {
@@ -343,7 +343,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(198, 168, 94, 0.88);
+  color: rgba(139, 0, 0, 0.88);
   line-height: 1.65;
   margin: 0 0 1rem;
   max-width: 22rem;
@@ -358,7 +358,7 @@
   font-weight: 500;
   color: #ebe7df;
   margin: 0 0 1rem;
-  text-shadow: 0 0 28px rgba(179, 18, 23, 0.2);
+  text-shadow: 0 0 28px rgba(139, 0, 0, 0.2);
 }
 
 .dn-feed-card__seal-link {
@@ -375,7 +375,7 @@
 
 .dn-feed-card__seal-link:hover {
   color: #fff;
-  text-shadow: 0 0 16px rgba(255, 46, 46, 0.35);
+  text-shadow: 0 0 16px rgba(196, 30, 30, 0.35);
 }
 
 .dn-feed-card__quote {

@@ -4,13 +4,8 @@
 }
 
 .dont-miss-call::before {
-  content: '';
-  position: absolute;
-  inset: -15% -8% auto;
-  height: 50%;
-  pointer-events: none;
-  background: radial-gradient(ellipse 65% 75% at 50% 0%, rgba(90, 8, 12, 0.18) 0%, transparent 62%);
-  opacity: 0.95;
+  content: none;
+  display: none;
 }
 
 .dont-miss-call__inner {
@@ -29,7 +24,7 @@
   margin: 0 0 1rem;
   color: #f4efe6;
   text-shadow:
-    0 0 36px rgba(179, 18, 23, 0.22),
+    0 0 36px rgba(139, 0, 0, 0.22),
     0 2px 0 rgba(0, 0, 0, 0.82);
 }
 
@@ -50,7 +45,7 @@
 
 .dont-miss-call__handle:hover {
   color: #fff;
-  text-shadow: 0 0 16px rgba(255, 46, 46, 0.35);
+  text-shadow: 0 0 16px rgba(196, 30, 30, 0.35);
 }
 
 .dont-miss-call__actions {
