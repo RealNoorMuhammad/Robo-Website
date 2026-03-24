@@ -70,7 +70,7 @@ export default function LatestTweetsSection() {
     fetchLatestRoboTweetIds(controller.signal)
       .then((ids) => {
         if (!mounted || !ids.length) return
-        setTweetIds(ids)
+        setTweetIds((current) => sortTweetIds([...current, ...ids]))
       })
       .catch(() => {
         // Keep current fallback IDs when external fetch is unavailable.
@@ -87,7 +87,6 @@ export default function LatestTweetsSection() {
       <div className="dn-tweets__head dn-tweets__head--minimal">
         <div className="dn-tweets__head-copy">
           <h2 className="dn-tweets__title">Latest From Robo</h2>
-          <p className="dn-tweets__subtitle">Fresh takes, straight from the source.</p>
         </div>
         <div className="dn-tweets__nav-group" aria-label="Tweets navigation">
           <button className="dn-tweets__nav dn-tweets__nav--prev" type="button" aria-label="Previous tweets">

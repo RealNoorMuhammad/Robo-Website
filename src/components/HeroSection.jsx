@@ -74,12 +74,9 @@ export default function HeroSection() {
 
       <div className="hero__grid">
         <div className="hero__copy">
-          <p className="hero__kicker">The God of New World</p>
           <HeroDeathNoteTitle />
           <p className="hero__summary">
-            Memecoins &amp; Prediction markets | I put faith in my own convictions as to what
-            <span className="hero__summary-break-desktop" aria-hidden="true" />
-            {' '}I believe is right and consider them to be righteous.
+            I put faith in my own convictions as to what I believe is right and consider them to be righteous.
           </p>
           <div className="hero__actions">
             <a

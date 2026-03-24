@@ -1487,7 +1487,7 @@
 
 .hero__summary {
   margin: 0.65rem 0 1.1rem;
-  max-width: 46ch;
+  max-width: 60ch;
   color: #d4d4d8;
   font-family: var(--font-ui);
   font-size: clamp(0.95rem, 1.5vw, 1rem);
@@ -1502,7 +1502,7 @@
 
 @media (min-width: 900px) {
   .hero__summary {
-    max-width: 72ch;
+    max-width: 96ch;
   }
 
   .hero__summary-break-desktop {
@@ -1557,13 +1557,13 @@
 
   /* Gap under kicker + gap above body copy */
   .hero__dn-title-stack {
-    margin-top: clamp(1.35rem, 4.25vw, 2.35rem);
+    margin-top: calc(clamp(1.35rem, 4.25vw, 2.35rem) + 20px);
     margin-bottom: clamp(1.5rem, 4.5vw, 2.5rem);
   }
 
   .hero__summary {
     max-width: min(22rem, 92vw);
-    margin: 0 auto clamp(1rem, 3vw, 1.25rem);
+    margin: -12px auto clamp(1rem, 3vw, 1.25rem);
     text-align: center;
     font-size: clamp(0.875rem, 3.4vw, 0.97rem);
     line-height: 1.62;
@@ -1643,8 +1643,9 @@
 
 @media (max-width: 899px) {
   .hero__media-frame {
-    width: min(78vw, 320px);
-    max-width: 320px;
+    width: min(64vw, 252px);
+    max-width: 252px;
+    margin-top: 20px;
   }
 
   .hero__media-frame::after {
