@@ -268,13 +268,13 @@ section.dn-tweets.section {
   padding: 0.35rem 0.45rem 0.4rem;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
-  background: linear-gradient(155deg, #0c0c0f 0%, #050506 48%, #08080a 100%);
-  border: 1px solid rgba(55, 42, 44, 0.95);
+  border-radius: 16px;
+  background: linear-gradient(155deg, rgba(8, 8, 10, 0.24) 0%, rgba(5, 5, 7, 0.3) 48%, rgba(7, 7, 9, 0.22) 100%);
+  border: 1px solid rgba(120, 24, 34, 0.38);
+  backdrop-filter: blur(2px);
   box-shadow:
-    0 22px 56px rgba(0, 0, 0, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.035),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.55);
+    0 14px 36px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transform: rotate(-0.35deg);
   transition:
     border-color 0.4s ease,
@@ -292,7 +292,7 @@ section.dn-tweets.section {
   box-shadow:
     0 0 22px rgba(139, 0, 0, 0.18),
     0 26px 64px rgba(0, 0, 0, 0.72),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
   transform: rotate(0deg) translateY(-3px);
 }
 
@@ -400,10 +400,10 @@ section.dn-tweets.section {
   align-content: start;
   gap: 0.7rem;
   padding: 0.9rem 0.8rem;
-  border-radius: 3px;
+  border-radius: 12px;
   pointer-events: none;
   background:
-    linear-gradient(145deg, rgba(18, 18, 22, 0.96) 0%, rgba(8, 8, 10, 0.98) 100%),
+    linear-gradient(145deg, rgba(18, 18, 22, 0.38) 0%, rgba(8, 8, 10, 0.44) 100%),
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -412,8 +412,7 @@ section.dn-tweets.section {
       rgba(139, 0, 0, 0.06) 23px
     );
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.03),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   overflow: hidden;
 }
 
@@ -479,9 +478,10 @@ section.dn-tweets.section {
   justify-content: center;
   gap: 0.65rem;
   padding: 0.9rem 0.8rem;
-  border-radius: 3px;
-  background: linear-gradient(145deg, rgba(12, 11, 14, 0.98) 0%, rgba(8, 8, 10, 0.98) 100%);
-  border: 1px solid rgba(73, 42, 47, 0.92);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(12, 11, 14, 0.4) 0%, rgba(8, 8, 10, 0.45) 100%);
+  border: 1px solid rgba(90, 32, 40, 0.5);
+  backdrop-filter: blur(2px);
 }
 
 .dn-tweets__embed-fallback-text {
@@ -511,7 +511,7 @@ section.dn-tweets.section {
 }
 
 .dn-tweets__embed-wrap iframe {
-  border-radius: 2px !important;
+  border-radius: 12px !important;
 }
 
 .dn-tweets__card-glow {

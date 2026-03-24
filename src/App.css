@@ -33,6 +33,7 @@
 
 @media (prefers-reduced-motion: reduce), (max-width: 900px) {
   .app::before {
+    background-image: url('./assets/backgroundmobile.png');
     background-attachment: scroll;
   }
 }

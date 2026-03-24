@@ -1980,10 +1980,7 @@
   }
 
   .hero__scroll-arrow {
-    position: fixed;
-    left: 50%;
-    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-    z-index: 40;
+    display: none;
   }
 }
 
