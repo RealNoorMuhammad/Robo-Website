@@ -492,6 +492,7 @@
   border-radius: 0;
   background: rgba(0, 0, 0, 0.62);
   box-shadow: none;
+  font-family: var(--font-heading);
 }
 
 .site-footer__grid::before {
@@ -550,7 +551,7 @@
 }
 
 .site-footer__brand {
-  font-family: var(--font-caps);
+  font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3.5vw, 1.85rem);
   font-weight: 700;
   letter-spacing: 0.28em;
@@ -648,7 +649,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  font-family: var(--font-caps);
+  font-family: var(--font-heading);
   font-size: 0.58rem;
   font-weight: 600;
   letter-spacing: 0.2em;
