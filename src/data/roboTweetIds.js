@@ -4,6 +4,8 @@
  * Or set VITE_TWEET_IDS="id1,id2,..." in .env to replace this list and skip auto-fetch.
  */
 export const ROBO_TWEET_IDS = [
+  '2036863947656274238',
+  '2036861440402087969',
   '2036798343725412583',
   '2036755951211159938',
   '2036667805177889107',
