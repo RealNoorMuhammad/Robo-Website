@@ -36,7 +36,7 @@
 }
 
 .dont-miss-call__handle {
-  color: var(--gold);
+  color: #aa0a0d;
   text-decoration: none;
   transition:
     color 0.25s ease,
@@ -44,8 +44,8 @@
 }
 
 .dont-miss-call__handle:hover {
-  color: #fff;
-  text-shadow: 0 0 16px rgba(196, 30, 30, 0.35);
+  color: #aa0a0d;
+  text-shadow: 0 0 16px rgba(170, 10, 13, 0.45);
 }
 
 .dont-miss-call__actions {

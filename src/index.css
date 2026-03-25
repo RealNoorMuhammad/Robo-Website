@@ -9,16 +9,16 @@
 }
 
 :root {
-  /* Death Note–style: deep black, blood red, cool gray text */
+  /* Death Note–style: deep black, muted wine accent, cool gray text */
   --bg-primary: #0b0b0b;
   --bg-secondary: #111111;
-  --accent-red: #8b0000;
-  --glow-red: #c41e1e;
+  --accent-red: #a05b5d;
+  --glow-red: #a05b5d;
   --text-primary: #f0f0f0;
   --text-secondary: #9a9a9a;
   --border-line: #1c1c1c;
   /* Muted crimson for secondary accents (replaces gold in this theme) */
-  --gold: #a04545;
+  --gold: #b8797a;
 
   --font-heading: 'Montserrat', system-ui, -apple-system, sans-serif;
   /* Geometric sans — modern headlines (e.g. rektober-style titles) */
