@@ -31,7 +31,7 @@ export default function DontMissCall() {
           >
             <span className="hero__dn-link-glow" aria-hidden="true" />
             <span className="hero__dn-link-inner">
-              <span  aria-hidden="true">
+              <span className="hero__dn-link-icon-wrap" aria-hidden="true">
                 <FaXTwitter className="hero__dn-link-icon" />
               </span>
               <span className="hero__dn-link-label">Follow on X</span>
@@ -45,7 +45,7 @@ export default function DontMissCall() {
           >
             <span className="hero__dn-link-glow" aria-hidden="true" />
             <span className="hero__dn-link-inner">
-              <span  aria-hidden="true">
+              <span className="hero__dn-link-icon-wrap" aria-hidden="true">
                 <FaTelegramPlane className="hero__dn-link-icon" />
               </span>
               <span className="hero__dn-link-label">Join Telegram</span>
