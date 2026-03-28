@@ -3,7 +3,7 @@
 .dn-tweets {
   position: relative;
   overflow: hidden;
-  --dn-tweets-card-height: 450px;
+  --dn-tweets-card-height: 430px;
 }
 
 /* Pull section end flush to next block — .section default bottom padding is huge */
@@ -348,7 +348,7 @@ section.dn-tweets.section {
   }
 }
 
-/* Fills all remaining space inside the 450px card so the loading skeleton covers the full card body */
+/* Fills all remaining space inside the 430px card so the loading skeleton covers the full card body */
 .dn-tweets__embed-wrap {
   position: relative;
   z-index: 1;
